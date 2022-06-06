@@ -1,0 +1,275 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.modal_media
+    - field.field.node.cas_profile.body
+    - field.field.node.cas_profile.field_backsplash
+    - field.field.node.cas_profile.field_education
+    - field.field.node.cas_profile.field_email
+    - field.field.node.cas_profile.field_image
+    - field.field.node.cas_profile.field_last_name
+    - field.field.node.cas_profile.field_lehigh_id
+    - field.field.node.cas_profile.field_link
+    - field.field.node.cas_profile.field_office
+    - field.field.node.cas_profile.field_positions
+    - field.field.node.cas_profile.field_research
+    - field.field.node.cas_profile.field_scholarship
+    - field.field.node.cas_profile.field_sub_page_ref
+    - field.field.node.cas_profile.field_teaching
+    - field.field.node.cas_profile.field_telephone
+    - node.type.cas_profile
+  module:
+    - entity_browser
+    - field_group
+    - link
+    - paragraphs
+    - paragraphs_ee
+    - paragraphs_features
+    - path
+    - telephone
+    - text
+third_party_settings:
+  field_group:
+    group_admin_info:
+      children:
+        - title
+        - field_lehigh_id
+        - field_last_name
+        - field_positions
+        - field_telephone
+        - field_email
+        - field_office
+      label: 'Admin Info'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: false
+        description: 'This information is pulled from Banner. If there is an error in the info on your page, please contact the Dean''s Office'
+        required_fields: false
+        weight: -9999
+id: node.cas_profile.default
+targetEntityType: node
+bundle: cas_profile
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 13
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+  created:
+    type: datetime_timestamp
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_backsplash:
+    type: entity_browser_entity_reference
+    weight: 2
+    region: content
+    settings:
+      entity_browser: modal_media_wide
+      field_widget_display: rendered_entity
+      field_widget_edit: false
+      field_widget_remove: true
+      field_widget_replace: true
+      open: false
+      field_widget_display_settings:
+        view_mode: media_library
+      selection_mode: selection_append
+    third_party_settings: {  }
+  field_education:
+    type: string_textfield
+    weight: 11
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_email:
+    type: email_default
+    weight: 6
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+  field_image:
+    type: entity_browser_entity_reference
+    weight: 3
+    region: content
+    settings:
+      entity_browser: modal_media
+      field_widget_display: rendered_entity
+      field_widget_edit: false
+      field_widget_remove: true
+      field_widget_replace: true
+      open: false
+      field_widget_display_settings:
+        view_mode: media_library
+      selection_mode: selection_append
+    third_party_settings: {  }
+  field_last_name:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_lehigh_id:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_link:
+    type: link_default
+    weight: 16
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_office:
+    type: string_textfield
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_positions:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_research:
+    type: paragraphs
+    weight: 12
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed_expand_nested
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: profile_research
+      features:
+        add_above: '0'
+        collapse_edit_all: '0'
+        duplicate: '0'
+    third_party_settings:
+      paragraphs_features:
+        add_in_between: false
+        delete_confirmation: false
+        split_text: false
+        show_drag_and_drop: false
+      paragraphs_ee:
+        paragraphs_ee:
+          dialog_off_canvas: false
+          dialog_style: tiles
+          easy_access_count: 2
+  field_scholarship:
+    type: text_textarea
+    weight: 14
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_sub_page_ref:
+    type: entity_reference_autocomplete
+    weight: 17
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_teaching:
+    type: text_textarea
+    weight: 15
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_telephone:
+    type: telephone_default
+    weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 6
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 10
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 7
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 4
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: profile_sub_page
+label: 'Profile Sub Page'
+type: 'canonical_entities:node'
+pattern: 'faculty-staff/[node:field_associated_profile:entity:title]/[node:field_associated_profile:entity:field_lehigh_id]-[node:title]'
+selection_criteria:
+  8cb003bc-db70-4d3c-9116-2c53298a8433:
+    id: node_type
+    bundles:
+      profile_sub_page: profile_sub_page
+    negate: false
+    context_mapping:
+      node: node
+selection_logic: and
+weight: -5
+relationships: {  }

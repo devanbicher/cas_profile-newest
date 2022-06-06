@@ -1,0 +1,61 @@
+<?php 
+
+use Drupal\block\Entity\Block;
+
+/**
+ * Update block precontent to be exlcuded on profiles and subpages 
+*/
+function cas_profile_install() {
+    
+    $block = Block::load('precontent');
+    $visibility = $block->getVisibility();
+    $visibility['entity_bundle:node']['context_mapping']['node'] = "@node.node_route_context:node";
+
+    $block->setVisibilityConfig('entity_bundle:node',
+                 array('id' => 'entity_bundle:node',
+                 'bundles' => array('cas_profile' => "cas_profile", 'profile_sub_page' => "profile_sub_page"),
+                 'negate' => true,
+                 'context_mapping' => $visibility['entity_bundle:node']['context_mapping']
+                 )
+            );
+
+    $block->save();
+
+    /* Update config to add field settings to form and view for the profile reference in the quotee paragraph entity */
+    $updateview =  \Drupal::configFactory()->getEditable('core.entity_view_display.paragraph.quotee.default');
+    $viewref = [
+        "type" => "entity_reference_revisions_entity_view",
+        "label" => "hidden",
+        "settings" => [
+            "view_mode" => "token",
+            "link" => "",
+        ],
+        "third_party_settings" => [],
+        "weight" => 3,
+        "region" => "content",
+    ];
+    $updateview->set("content.field_profile_reference", $viewref);
+    $updateview->save();
+
+    $updateform =  \Drupal::configFactory()->getEditable('core.entity_form_display.paragraph.quotee.default');
+    $formref = [
+        "type" => "entity_reference_revisions_autocomplete",
+        "weight" => 3,
+        "region" => "content",
+        "settings" => [
+            "match_operator" => "CONTAINS",
+            "match_limit" => 10,
+            "size" => 60,
+            "placeholder" => "",
+        ],
+        "third_party_settings" => [],
+    ];
+    $updateform->set("content.field_profile_reference", $formref);
+    $updateform->set("third_party_settings.field_group.group_internal_profile_reference.children.1", "field_profile_reference");
+
+    $updateform->save();
+    
+    // $updatedescription =  \Drupal::configFactory()->getEditable('field.field.paragraph.quotee.field_show_image');
+    // $updatedescription->set("description", "Whether or not to show the Quotee image (only applicable for the profile reference)");
+    // $updatedescription->save();
+}

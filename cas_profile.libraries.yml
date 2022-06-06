@@ -1,0 +1,7 @@
+tabselect: 
+  js:
+    js/tabselect.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings

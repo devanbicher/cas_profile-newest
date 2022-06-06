@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Profile Sub Page'
+type: profile_sub_page
+description: 'The sub page type for profiles.  These are associated with a person''s profile.  THey mimic the basic in terms of paragraphs and functionality.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

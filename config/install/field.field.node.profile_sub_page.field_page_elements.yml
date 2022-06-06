@@ -1,0 +1,63 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_elements
+    - node.type.profile_sub_page
+    - paragraphs.paragraphs_type.callouts
+    - paragraphs.paragraphs_type.link_list
+    - paragraphs.paragraphs_type.pull_quote
+    - paragraphs.paragraphs_type.simple_body
+    - paragraphs.paragraphs_type.table
+    - paragraphs.paragraphs_type.video_embed
+  module:
+    - entity_reference_revisions
+id: node.profile_sub_page.field_page_elements
+field_name: field_page_elements
+entity_type: node
+bundle: profile_sub_page
+label: 'Page Elements'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      callouts: callouts
+      link_list: link_list
+      pull_quote: pull_quote
+      table: table
+      video_embed: video_embed
+    target_bundles_drag_drop:
+      attributed_person:
+        weight: 10
+        enabled: false
+      callouts:
+        enabled: true
+        weight: 11
+      link_list:
+        enabled: true
+        weight: 12
+      profile_research:
+        weight: 13
+        enabled: false
+      pull_quote:
+        enabled: true
+        weight: 14
+      quotee:
+        weight: 15
+        enabled: false
+      simple_body:
+        weight: 16
+        enabled: false
+      table:
+        enabled: true
+        weight: 17
+      video_embed:
+        enabled: true
+        weight: 18
+field_type: entity_reference_revisions

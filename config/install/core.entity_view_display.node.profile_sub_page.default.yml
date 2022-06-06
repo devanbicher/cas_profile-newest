@@ -1,0 +1,57 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.profile_sub_page.body
+    - field.field.node.profile_sub_page.field_associated_profile
+    - field.field.node.profile_sub_page.field_page_elements
+    - field.field.node.profile_sub_page.field_page_sub_header
+    - node.type.profile_sub_page
+  module:
+    - entity_reference_revisions
+    - text
+    - user
+id: node.profile_sub_page.default
+targetEntityType: node
+bundle: profile_sub_page
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_associated_profile:
+    weight: 1
+    label: hidden
+    settings:
+      link: true
+      view_mode: teaser
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_page_elements:
+    weight: 4
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_page_sub_header:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

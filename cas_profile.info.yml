@@ -1,0 +1,9 @@
+name: 'CAS Profile Content Type'
+description: 'Configuration for the CAS Profile content type and any custom code'
+package: Custom
+type: module
+core: 8.x
+core_version_requirement: '^8 || ^9'
+dependencies:
+  - menu_ui
+  - paragraphs_ee

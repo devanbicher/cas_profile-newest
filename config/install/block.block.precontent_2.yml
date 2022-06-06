@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - blockgroup.block_group_content.pre_content
+  module:
+    - blockgroup
+    - system
+  theme:
+    - cas_base
+id: precontent_2
+theme: cas_base
+region: content
+weight: -2
+provider: null
+plugin: 'block_group:pre_content'
+settings:
+  id: 'block_group:pre_content'
+  label: Pre-Content
+  provider: blockgroup
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: /faculty-staff
+    negate: false

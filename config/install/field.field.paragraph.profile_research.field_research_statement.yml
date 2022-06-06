@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_research_statement
+    - paragraphs.paragraphs_type.profile_research
+  module:
+    - text
+id: paragraph.profile_research.field_research_statement
+field_name: field_research_statement
+entity_type: paragraph
+bundle: profile_research
+label: 'Research Statement'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

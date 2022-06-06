@@ -1,0 +1,51 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_research
+    - node.type.cas_profile
+    - paragraphs.paragraphs_type.profile_research
+  module:
+    - entity_reference_revisions
+id: node.cas_profile.field_research
+field_name: field_research
+entity_type: node
+bundle: cas_profile
+label: Research
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      profile_research: profile_research
+    target_bundles_drag_drop:
+      attributed_person:
+        weight: 9
+        enabled: false
+      callouts:
+        weight: 10
+        enabled: false
+      link_list:
+        weight: 11
+        enabled: false
+      profile_research:
+        enabled: true
+        weight: 12
+      pull_quote:
+        weight: 13
+        enabled: false
+      quotee:
+        weight: 14
+        enabled: false
+      simple_body:
+        weight: 15
+        enabled: false
+      table:
+        weight: 16
+        enabled: false
+field_type: entity_reference_revisions

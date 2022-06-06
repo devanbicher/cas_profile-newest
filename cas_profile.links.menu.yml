@@ -1,0 +1,6 @@
+cas_profile.create_profile_form:
+  title: 'Create or Update Profile'
+  route_name: cas_profile.create_profile_form
+  description: 'Custom Link'
+  parent: system.admin_content
+  weight: 102

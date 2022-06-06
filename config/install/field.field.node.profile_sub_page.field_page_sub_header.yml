@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_sub_header
+    - node.type.profile_sub_page
+id: node.profile_sub_page.field_page_sub_header
+field_name: field_page_sub_header
+entity_type: node
+bundle: profile_sub_page
+label: 'Page Sub Header'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

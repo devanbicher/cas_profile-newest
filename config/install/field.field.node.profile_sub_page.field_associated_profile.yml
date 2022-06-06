@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_associated_profile
+    - node.type.profile_sub_page
+  content:
+    - 'node:cas_profile:185af569-1779-4b59-91fd-b8a6f0d3fb51'
+id: node.profile_sub_page.field_associated_profile
+field_name: field_associated_profile
+entity_type: node
+bundle: profile_sub_page
+label: 'Associated Profile'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: cas_profile_internal_reference
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

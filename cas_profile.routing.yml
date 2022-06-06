@@ -1,0 +1,14 @@
+profile_tab.page:
+  path: '/faculty-staff/{profile}/{tab}'
+  defaults:
+    _controller: '\Drupal\cas_profile\Controller\CasProfileController::page_by_field'
+  requirements:
+    _permission: 'access content'
+    tab: 'research|biography|scholarship|teaching|website'
+cas_profile.create_profile_form:
+  path: '/admin/content/addnewprofile'
+  defaults:
+    _form: '\Drupal\cas_profile\Form\CreateProfileForm'
+    _title: 'Add New or Update Existing CAS Profile'
+  requirements:
+    _permission: 'access profiles creation and update'

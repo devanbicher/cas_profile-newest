@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_scholarship
+    - node.type.cas_profile
+  module:
+    - text
+id: node.cas_profile.field_scholarship
+field_name: field_scholarship
+entity_type: node
+bundle: cas_profile
+label: Scholarship
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

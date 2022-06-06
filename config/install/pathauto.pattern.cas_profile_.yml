@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: cas_profile_
+label: 'CAS Profile '
+type: 'canonical_entities:node'
+pattern: 'faculty-staff/[node:title]'
+selection_criteria:
+  5ef5f198-050b-41bb-bfb6-641ef59591a2:
+    id: node_type
+    bundles:
+      cas_profile: cas_profile
+    negate: false
+    context_mapping:
+      node: node
+selection_logic: and
+weight: -5
+relationships: {  }

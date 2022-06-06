@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'CAS Profile'
+type: cas_profile
+description: 'A Faculty/Staff Profile with basic fields pulled in from Banner. Sub Pages will be displayed on the Page Display for any Profile.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

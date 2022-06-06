@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: square_profile
+label: 'Square Profile'
+effects:
+  c7e40c88-2c0c-4a49-b19a-ff93305c358f:
+    uuid: ''
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 320
+      height: 320
+      anchor: center-center

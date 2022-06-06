@@ -1,0 +1,152 @@
+<?php
+
+use Drupal\Core\Entity;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\user\Entity\User;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Render\Element\Value;
+
+//use Drupal\cas_profile\bannerconnection;
+
+/* Some notes and potential issues:
+    1. make sure nothing in the linking of sub pages breaks if a faculty member is unpublished. 
+    2. looks like something might break if a person is no longer in banner i.e. me, 
+        so in the interest of keeping the profile (maybe) without querying banner that might need to looked into
+    3. add a new revision when the profiles are updated via the code from off of the form. 
+    4. Find a way to run php with drush to add a profile from the commandline 
+
+*/
+
+function cas_profile_node_presave($entity){
+/* I used this for testing.  
+    If you want to act on the node before saving everytime, this is the place to do it.  
+    leaving this here for now.  
+    */
+}
+
+function cas_profile_node_create($entity){
+    //all of this code is to assign the currently logged in user as the associated profile of a profile sub page content type.
+    if($entity->getType() == 'profile_sub_page'){
+        $current_user = User::load(\Drupal::currentUser()->id()); //load the user entity based off of the current user
+        $lehigh_id = $current_user->getAccountName(); //get the account name, i.e. lehigh id of the current user
+
+        // entity query to get published cas_profile pages with the same lehigh id, there should only ever be one, but it will use the first one in the query even if there's more
+        $profile_query = Drupal::entityQuery('node')
+            ->condition('status',1)
+            ->condition('type','cas_profile')
+            ->condition('field_lehigh_id',$lehigh_id,'=')
+            ->execute();
+        
+        // if the query isn't empty get the nid of the profile, if the query is empty we just won't fill in that field.
+        if( ! empty($profile_query)){
+            $profile_id = array_values($profile_query)[0];
+        
+            if($entity->hasField('field_associated_profile')){ //make sure the field exists, just to be sure.
+                $entity->set('field_associated_profile',$profile_id);
+            }
+        }
+    }
+
+    if ($entity->bundle() == 'cas_profile'){
+        if ( $entity->get('field_lehigh_id')->isEmpty()  ){
+            $message = \Drupal::messenger();
+            $message->addError('This Profile does not have a lehigh ID');
+        }
+        else{
+            
+            //create the db connection
+            require 'src/banner/bannerconnection.php';
+            $bann_conn = banner_connect();
+            
+            $lehigh_id = $entity->get('field_lehigh_id')->getValue()[0]['value'];
+
+            //return information from the other code file
+            require 'src/banner/bannerquerying.php';
+            $banner_basic_info = get_basic_information($bann_conn, $lehigh_id);
+            
+            if( empty($banner_basic_info)){
+                $message = \Drupal::messenger();
+                $message->addError('Banner did not return any information for: '.$lehigh_id);
+
+                $entity->set('title',$lehigh_id.' - TEMP TITLE, CHANGE AFTER CREATION');
+            }
+            else{
+                //$info = [$address, $exten, $name, $$info[0]job_title];
+                $entity->set('field_office',$banner_basic_info[0]);
+                $entity->set('field_telephone',$banner_basic_info[1]);
+                $entity->set('title',$banner_basic_info[2]);
+                $entity->set('field_last_name',$banner_basic_info[3]);
+                $entity->set('field_positions',$banner_basic_info[4]);
+                $entity->set('field_email',$banner_basic_info[5]);
+            }       
+        }
+    }
+}
+
+function cas_profile_entity_presave($entity){
+    // This checks to make sure the author of the profile sub page content type is the same as the person in the associated profile field
+    // This makes permissioning much easier, so you can give the 'faculty' role 'can only edit their own' permission and it'll work to have a coordniator create and assign a subpage to someone.
+    if ($entity->getEntityTypeId() == 'node'){
+        if ($entity->bundle() == 'profile_sub_page'){
+            
+            //get the associated profile object, then get the Lehigh id
+            $profile_id = $entity->get('field_associated_profile')->getValue()[0]['target_id'];
+            $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+            $profile = $node_storage->load($profile_id);
+            $profile_lehigh_id = $profile->get('field_lehigh_id')->getValue()[0]['value'];
+            
+            //get the author user object and then get the username which is the lehigh id
+            $author_uid = $entity->get('uid')->getValue()[0]['target_id'];
+            $author = User::load($author_uid);
+            $author_lehigh_id = $author->getAccountName();
+            
+            //check if the author of this page matches the associated profile person
+            if($author_lehigh_id != $profile_lehigh_id){
+                //if they are different, fetch the new author
+                $user_query = Drupal::entityQuery('user')
+                    ->condition('status',1)
+                    ->condition('name',$profile_lehigh_id,'=')
+                    ->execute();
+                
+                //if the fetch was successful assign the new author.
+                if( ! empty($user_query)){
+                    $new_author_id = array_values($user_query)[0];
+                    //set the new author
+                    $entity->set('uid',$new_author_id);
+                }
+                else{
+                    $message = \Drupal::messenger();
+                    $message->addWarning('A User with the name (lehigh ID): '.$profile_lehigh_id.' does NOT exist. The Author will remain as you.');
+                }
+            }
+        }
+    }
+}
+
+// there is a generic hook_field_widget_form_alter  then this uses a more specific hook_field_widget_WIDGET_TYPE_form_alter, use the generic one to find the widget type.
+function cas_profile_field_widget_entity_reference_autocomplete_form_alter(&$element, &$form_state, $context) {
+    if($context['items']->getName() == 'field_sub_page_ref'){
+        $cas_profile_id = $form_state->getFormObject()->getEntity()->id();  //get the nid of the page/profile
+        $element['target_id']['#selection_settings']['view']['arguments']=[$cas_profile_id];  //pass the id to the arguments for the view (SINCE THIS CAN'T BE DONE NORMALLY I GUESS)
+        
+    }   
+}
+
+//Changed Research Statement inside Research paragraph to use the simple text WYSIWYG editor
+function cas_profile_field_widget_paragraphs_form_alter(&$element, &$form_state, $context) {
+    if ($element['#paragraph_type'] == 'profile_research') {
+        $element['subform']['field_research_statement']['widget'][0]['#format'] = 'simple_text';
+    }
+}
+
+
+function cas_profile_preprocess_node(&$vars) {
+    $node = $vars['node'];
+    $view_mode = $vars['view_mode'];
+    if ($node->bundle() == 'cas_profile' && $view_mode == 'full') {
+        $vars['#attached']['library'][] = 'cas_profile/tabselect';
+        $vars['#attached']['drupalSettings']['tabselect']['pagename'] = "research";
+    }
+}

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_teaching
+    - node.type.cas_profile
+  module:
+    - text
+id: node.cas_profile.field_teaching
+field_name: field_teaching
+entity_type: node
+bundle: cas_profile
+label: Teaching
+description: 'You can use this field to write a description of your courses (current, upcoming, future). You can also describe your teaching interests, etc. This will show up on your profile on a tab called Teaching.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

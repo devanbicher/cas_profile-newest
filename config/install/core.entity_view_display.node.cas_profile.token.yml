@@ -1,0 +1,62 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.token
+    - field.field.node.cas_profile.body
+    - field.field.node.cas_profile.field_backsplash
+    - field.field.node.cas_profile.field_education
+    - field.field.node.cas_profile.field_email
+    - field.field.node.cas_profile.field_image
+    - field.field.node.cas_profile.field_last_name
+    - field.field.node.cas_profile.field_lehigh_id
+    - field.field.node.cas_profile.field_link
+    - field.field.node.cas_profile.field_office
+    - field.field.node.cas_profile.field_positions
+    - field.field.node.cas_profile.field_research
+    - field.field.node.cas_profile.field_scholarship
+    - field.field.node.cas_profile.field_sub_page_ref
+    - field.field.node.cas_profile.field_teaching
+    - field.field.node.cas_profile.field_telephone
+    - image.style.square_profile
+    - node.type.cas_profile
+  module:
+    - media
+    - user
+id: node.cas_profile.token
+targetEntityType: node
+bundle: cas_profile
+mode: token
+content:
+  field_image:
+    type: media_thumbnail
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: square_profile
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_positions:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  body: true
+  field_backsplash: true
+  field_education: true
+  field_email: true
+  field_last_name: true
+  field_lehigh_id: true
+  field_link: true
+  field_office: true
+  field_research: true
+  field_scholarship: true
+  field_sub_page_ref: true
+  field_teaching: true
+  field_telephone: true
+  links: true
