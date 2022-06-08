@@ -12,30 +12,9 @@ class CasProfileController extends ControllerBase
 
     public function page_by_field($profile, $tab)
     {
-
-        // $path = \Drupal::service('path_alias.manager')->getPathByAlias('/faculty-staff/' . $profile);
-        // if(preg_match('/node\/(\d+)/', $path, $matches)) {
-        //     $node = \Drupal\node\Entity\Node::load($matches[1]);
-        // }
-        // $view_builder = \Drupal::entityTypeManager()->getViewBuilder($node->getEntityTypeId());
-
-        // $node_view = $view_builder->view($node);
-
-        // $build = [];
-
-        // $build = array(
-        //     '#theme' => 'cas_profile',
-        //     '#content' => $node_view,
-        // );
-
-        // $build['#attached']['library'][] = 'cas_profile/tabselect';
-        // $build['#attached']['drupalSettings']['tabselect']['pagename'] = $pagename;
-
-
+        //We shouldn't do it this way, this is creating a redirect back to the same page everytime you click on a tab I think
         $response = new RedirectResponse('/faculty-staff/' . $profile . '#' . $tab);
         return $response;
-      
-        //return $build;
     }
 
 }

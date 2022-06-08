@@ -8,23 +8,12 @@ use Drupal\user\Entity\User;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Render\Element\Value;
 
-//use Drupal\cas_profile\bannerconnection;
-
 /* Some notes and potential issues:
     1. make sure nothing in the linking of sub pages breaks if a faculty member is unpublished. 
     2. looks like something might break if a person is no longer in banner i.e. me, 
         so in the interest of keeping the profile (maybe) without querying banner that might need to looked into
-    3. add a new revision when the profiles are updated via the code from off of the form. 
-    4. Find a way to run php with drush to add a profile from the commandline 
-
+    3. More to come when this is tested by users on a site
 */
-
-function cas_profile_node_presave($entity){
-/* I used this for testing.  
-    If you want to act on the node before saving everytime, this is the place to do it.  
-    leaving this here for now.  
-    */
-}
 
 function cas_profile_node_create($entity){
     //all of this code is to assign the currently logged in user as the associated profile of a profile sub page content type.
