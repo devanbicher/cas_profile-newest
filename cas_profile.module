@@ -46,6 +46,7 @@ function cas_profile_node_create($entity){
         else{
             
             //create the db connection
+            // Look into Drupal services to do this bit, not a straight require
             require 'src/banner/bannerconnection.php';
             $bann_conn = banner_connect();
             
